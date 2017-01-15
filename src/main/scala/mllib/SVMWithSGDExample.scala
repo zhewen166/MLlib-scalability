@@ -39,9 +39,13 @@ object SVMWithSGDExample {
     val sc = new SparkContext(conf)
     val path =  args(0)
     val data = MLUtils.loadLibSVMFile(sc, path, args(1).toInt,args(2).toInt)
-    // Split data into training (60%) and test (40%).
+//     Split data into training (60%) and test (40%).
+    val splits = data.randomSplit(Array(0.6, 0.4), seed = 11L)
 
-    val training = data.cache()
+    val training = splits(0).cache()
+    val test = splits(1)
+
+//    val training = data.cache()
 
     println(training.getNumPartitions)
 
@@ -52,12 +56,12 @@ object SVMWithSGDExample {
 
     println(training.toDebugString)
 
-    val testData = MLUtils.loadLibSVMFile(sc, args(4), args(5).toInt,args(6).toInt)
+//    val testData = MLUtils.loadLibSVMFile(sc, args(4), args(5).toInt,args(6).toInt)
     // Clear the default threshold.
     model.clearThreshold()
 
     // Compute raw scores on the test set.
-    val scoreAndLabels = testData.map { point =>
+    val scoreAndLabels = test.map { point =>
       val score = model.predict(point.features)
       (score, point.label)
     }
