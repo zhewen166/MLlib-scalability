@@ -51,25 +51,26 @@ object ALSExample {
     import spark.implicits._
 
     // $example on$
-    val temp = spark.read.textFile(args(0))
+    val temp = spark.read.textFile(args(0)).sample(false,args(1).toDouble,11)
     temp.explain(true)
     val ratings = temp
       .map(parseRating).toDF()
 
-    val testing = spark.read.textFile(args(1))
+    val testingTmp  = spark.read.textFile(args(2)).sample(false,0.5,11)
+    val testing = testingTmp
       .map(parseRating).toDF()
 
 //    val Array(training, test) = ratings.randomSplit(Array(0.8, 0.2))
 
     // Build the recommendation model using ALS on the training data
     val als = new ALS()
-      .setMaxIter(args(2).toInt)
-      .setRegParam(args(3).toDouble)
+      .setMaxIter(args(3).toInt)
+      .setRegParam(args(4).toDouble)
       .setUserCol("userId")
       .setItemCol("movieId")
       .setRatingCol("rating")
-      .setNumBlocks(args(4).toInt)
-      .setRank(args(5).toInt)
+      .setNumBlocks(args(5).toInt)
+      .setRank(args(6).toInt)
     val model = als.fit(ratings)
 
     // Evaluate the model by computing the RMSE on the test data
