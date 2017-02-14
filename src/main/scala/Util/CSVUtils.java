@@ -7,25 +7,24 @@ package dataSample;
 import java.io.*;
 
 /**
- * CSV操作(导出和导入)
+ * CSV Util(import or  export csv file)
  *
- * @version 1.0 Jan 27, 2014 4:30:58 PM
  */
-public class CSVUtils2 {
+public class CSVUtils {
 
     public static void main(String[] args){
-        exportCsv1(new File("/home/cz/Hadoop2/spark-all/SparkFaultBench-master/data/mllib/NetFlix-prize/netflix-prize.csv"));
+        exportCsv(new File("/home/cz/Hadoop2/flink-all/flink-MlLib/data/SUSY/SUSY"));
     }
     /**
      * 导出
      *
-     * @param file csv文件(路径+文件名)，csv文件不存在会自动创建
+     * @param file csv
      * @return
      */
-    public static boolean exportCsv1(File file){
+    public static boolean exportCsv(File file){
 
 
-        String outPutFile = "/home/cz/Hadoop2/spark-all/SparkFaultBench-master/data/mllib/NetFlix-prize/netflix-prize -15.csv";
+        String outPutFile = "/home/cz/Hadoop2/flink-all/flink-MlLib/data/SUSY/SUSY-test";
         boolean isSucess=false;
 
         FileOutputStream out = null;
@@ -34,29 +33,21 @@ public class CSVUtils2 {
 
         BufferedReader br = null;
         String line = "";
-        double count = 0;
-
+        double count  = 0;
+        System.out.println("--transfer begin ----");
         try {
             br = new BufferedReader(new FileReader(file));
             out = new FileOutputStream(outPutFile);
             osw = new OutputStreamWriter(out);
             pw = new PrintWriter(osw);
-            System.out.println("----转换开始 -------");
-            String newLine = "";
             while ((line = br.readLine()) != null) {
-                count ++;
-                if(count == 15) {
-                    pw.println(line);
-                    pw.flush();
-                    count = 0;
-                }
-
-//                String[] array = line.split(",");
-//                newLine = array[0] +"::" +array[1] + "::" + array[2] + "::" + array[3];
-
+               count ++;
+              if(count == 11000) break;
+                pw.println(line);
+                pw.flush();
             }
             isSucess = true;
-            System.out.println(count);
+            System.out.println("--transfer end ----");
         } catch (Exception e) {
             isSucess = false;
         } finally {
@@ -70,7 +61,6 @@ public class CSVUtils2 {
             }
 
         }
-        System.out.println("转换结束");
         return isSucess;
     }
 }

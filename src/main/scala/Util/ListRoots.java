@@ -52,25 +52,25 @@ public class ListRoots {
 		}
 	}
 
-//	/**
-//	 * 获得写入数据的路径
-//	 * @return
-//	 */
-//	public static String getLogPath() {
-//		return "/home/cz/Hadoop2/flink-all/flink-MlLib/data/als-data/netflix-prize1.csv";
-//	}
-//
-//	/**
-//	 * 向dir路径下写入数据data
-//	 * @param path
-//	 * @param fileData
-//	 */
-//	public static void toFiles(String path, String fileData) throws IOException {
-//		File file = new File(path);
-//		if (!file.exists()) {
-//			file.createNewFile();
-//		}
-//        FileProducerUtil.exportCsv(new File(path),new File(fileData));
-//	}
+	/**
+	 * 获得写入数据的路径
+	 * @return
+	 */
+	public static String getLogPath() {
+		return "/home/cz/Hadoop2/flink-all/flink-MlLib/data/als-data/netflix-prize1.csv";
+	}
+
+	/**
+	 * 向dir路径下写入数据data
+	 * @param path
+	 * @param fileData
+	 */
+	public static void toFiles(String path, String fileData) throws IOException {
+		File file = new File(path);
+		if (!file.exists()) {
+			file.createNewFile();
+		}
+        FileProducerUtil.exportCsv(new File(path),new File(fileData));
+	}
 
 }

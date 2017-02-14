@@ -7,7 +7,7 @@ package dataSample;
 import java.io.*;
 
 /**
- * CSV操作(导出和导入)
+ * CSV Util(import or  export csv file)
  *
  * @version 1.0 Jan 27, 2014 4:30:58 PM
  */
@@ -24,9 +24,9 @@ public class FileProducerUtil {
 
     }
     /**
-     * 导出
+     * export
      *
-     * @param file csv文件(路径+文件名)，csv文件不存在会自动创建
+     * @param file csv file
      * @return
      */
     public static boolean exportCsv(File file){
@@ -76,7 +76,7 @@ public class FileProducerUtil {
             }
 
         }
-        System.out.println("转换结束");
+        System.out.println("--transfer end ----");
         return isSucess;
     }
 }
